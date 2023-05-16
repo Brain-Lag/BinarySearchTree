@@ -1,51 +1,77 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace BinarySearchTree;
 
-namespace Tree
+internal class Tree
 {
-    class Tree
+    public Node Root;
+
+    public Tree()
     {
-        public Node Root { get; private set; }
+        Root = null;
+    }
 
-        public void Add(int data)
+    public void Insert(int value)
+    {
+        Node newNode = new Node(value);
+
+        if (Root == null)
         {
-            this.Root = InsertData(this.Root,data);
+            Root = newNode;
+            return;
         }
 
-        private Node InsertData(Node parent, int data)
+        Node currentNode = Root;
+        Node parent;
+
+        while (true)
         {
-            if (parent == null)
+            parent = currentNode;
+
+            if (value < currentNode.Value)
             {
-                parent = new Node(data);
-                return parent;
+                currentNode = currentNode.Left;
+
+                if (currentNode == null)
+                {
+                    parent.Left = newNode;
+                    return;
+                }
             }
-            if (data < parent.Data)
+            else
             {
-                parent.SetLeft(InsertData(parent.Left, data));
+                currentNode = currentNode.Right;
+
+                if (currentNode == null)
+                {
+                    parent.Right = newNode;
+                    return;
+                }
             }
-            else if (data > parent.Data)
-            {
-                parent.SetRight(InsertData(parent.Right, data));
-            }
-            return parent;
         }
+    }
 
-        public Node Search(int data)
+    public void BreadthFirstSearch()
+    {
+        if (Root == null)
         {
-            return Search(this.Root, data);
+            throw new ArgumentException( "Дерево пустое.");
+            return;
         }
 
-        public Node Search(Node parent, int data)
+        Queue<Node> queue = new Queue<Node>();
+        queue.Enqueue(Root);
+
+        while (queue.Count > 0)
         {
-            if (parent == null || data == parent.Data) return parent;
+            Node currentNode = queue.Dequeue();
+            Console.Write(currentNode.Value + " ");
 
-            if (data < parent.Data) return Search(parent.Left, data);
+            if (currentNode.Left != null)
+                queue.Enqueue(currentNode.Left);
 
-            else return Search(parent.Right, data);
+            if (currentNode.Right != null)
+                queue.Enqueue(currentNode.Right);
         }
 
+        Console.WriteLine();
     }
 }

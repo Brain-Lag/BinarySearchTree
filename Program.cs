@@ -1,18 +1,22 @@
-﻿using System;
-using System.Collections;
+﻿using BinarySearchTree;
 
-namespace Tree
+class Program
 {
-    class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            var tree = new Tree();
-            tree.Add(2);
-            tree.Add(3);
-            tree.Add(1);
-            tree.Search(1);
-            tree.Search(4);
-        }
+        Tree tree = new Tree();
+
+        tree.Insert(8);
+        tree.Insert(10);
+        tree.Insert(3);
+        tree.Insert(6);
+        tree.Insert(1);
+        tree.Insert(14);
+        tree.Insert(4);
+        tree.Insert(7);
+        tree.Insert(13);
+
+        Console.WriteLine("Поиск в ширину:");
+        tree.BreadthFirstSearch();
     }
 }
